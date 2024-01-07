@@ -25,6 +25,8 @@ then JAVA_OPTS="$JAVA_OPTS -XX:CRaCRestoreFrom=cr" # enable CRaC
 else JAVA_OPTS="$JAVA_OPTS -XX:CRaCCheckpointTo=cr -Dcrac.checkpoint=true" # instruct to store a checkpoint if not present
 fi
 
-time java $JAVA_OPTS --class-path target/average-1.0.0-SNAPSHOT.jar dev.morling.onebrc.CalculateAverage_ddimtirov
+#sdk install java 21.0.1.crac-librca
+#dnf -y install libbsd
+#sdk use java 21.0.1.crac-librca
 
-# & "$Env:JAVA_HOME/bin/java" --enable-preview -Xms1g -Xmx1g -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC  -XX:+AlwaysPreTouch --class-path target/average-1.0.0-SNAPSHOT.jar dev.morling.onebrc.CalculateAverage_ddimtirov
+time java $JAVA_OPTS --class-path target/average-1.0.0-SNAPSHOT.jar dev.morling.onebrc.CalculateAverage_ddimtirov
