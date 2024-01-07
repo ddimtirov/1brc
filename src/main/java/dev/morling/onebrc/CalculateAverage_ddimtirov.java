@@ -15,6 +15,9 @@
  */
 package dev.morling.onebrc;
 
+import jdk.crac.CheckpointException;
+import jdk.crac.RestoreException;
+
 import java.io.*;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -44,7 +47,7 @@ public class CalculateAverage_ddimtirov {
     private static final Map<String, LongAdder> hashCollisionOccurrences = new ConcurrentHashMap<>();
 
     @SuppressWarnings("RedundantSuppression")
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, RestoreException, CheckpointException {
         var path = Path.of(args.length>0 ? args[0] : FILE);
         Instant start = null;// Instant.now();
 
@@ -83,6 +86,9 @@ public class CalculateAverage_ddimtirov {
             if (assertions) System.err.printf("hash clashes: %s%n", hashCollisionOccurrences);
         }
         assert Files.readAllLines(Path.of("measurements.out")).getFirst().equals(result);
+        if (Boolean.getBoolean("crac.checkpoint")) {
+            jdk.crac.Core.checkpointRestore();
+        }
     }
 
     record FileSegment(int index, long start, long size) {
