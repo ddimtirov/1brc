@@ -87,7 +87,9 @@ public class CalculateAverage_ddimtirov {
         }
         assert Files.readAllLines(Path.of("measurements.out")).getFirst().equals(result);
         if (Boolean.getBoolean("crac.checkpoint")) {
+            System.out.println(System.getProperties().keySet().stream().filter(it -> it.toString().startsWith("crac.")).toList());
             System.clearProperty("crac.checkpoint");
+            System.err.println("Checkpointing");
             jdk.crac.Core.checkpointRestore();
         }
     }
